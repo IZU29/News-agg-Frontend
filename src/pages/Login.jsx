@@ -1,20 +1,23 @@
 import React , {useState , useEffect} from 'react'
+
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  const [username , setUsername] = useState()
   const [email , setEmail] = useState()
   const [password , setPassword] = useState()
   const [Error , setError] = useState()
+  const navigate = useNavigate()
 
   const postdata = async (e) => {
 e.preventDefault()
     try{
-      const signInData = {username , email, password}
+      const signInData = {email, password}
       const response = await axios.post('http://localhost:3000/api/login' , signInData);
       localStorage.setItem('token' , response.data.token)
       // the token has no bearer !!!
       console.log("Success")
+      navigate('/')
     }
     catch(error){
       setError("Something went wrong try again !!!")

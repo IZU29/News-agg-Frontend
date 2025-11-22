@@ -1,12 +1,14 @@
 import React , {useState , useEffect} from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+ 
 
 const SignUp = () => {
   const [username , setUsername] = useState()
   const [email , setEmail] = useState()
   const [password , setPassword] = useState()
   const [Error , setError] = useState()
-
+  const navigate = useNavigate()
   const postdata = async (e) => {
 e.preventDefault()
     try{
@@ -15,6 +17,7 @@ e.preventDefault()
       localStorage.setItem('token' , response.data.token)
       // the token has no bearer !!!
       console.log("Success")
+      navigate('/')
     }
     catch(error){
       setError("Something went wrong try again !!!")
