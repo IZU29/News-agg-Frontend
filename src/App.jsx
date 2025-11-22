@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {BrowserRouter as Router, Routes , Route} from 'react-router-dom'
 import Home from '../src/pages/Home'
-import Signin from '../src/pages/Signin'
+import SignUp from './pages/SignUp'
 import './App.css'
 
 export default function App() {
@@ -15,7 +15,8 @@ export default function App() {
     <Router>  
       <Routes>
         <Route path = "/" element={<Home />}>Home</Route>
-        <Route path = "/signin" element={<Signin />}>SignIn</Route>
+        <Route path = "/signup" element={<SignUp />}>SignIn</Route>
+        <Route path = "/login" element={<Login />}>LogIn</Route>
       </Routes>
     </Router>
    </div>
