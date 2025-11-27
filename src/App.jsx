@@ -1,16 +1,15 @@
 import { useState } from 'react'
 import {BrowserRouter as Router, Routes , Route} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import Home from '../src/pages/Home'
 import SignUp from './pages/SignUp'
 import Login from './pages/Login'
 import './App.css'
 
 export default function App() {
+  // const navigate = useNavigate()
   return (
    <>
-   <nav className="">
-    <h1 className="">News_Agg</h1>
-   </nav>
 
    <div className="">
     <Router>  

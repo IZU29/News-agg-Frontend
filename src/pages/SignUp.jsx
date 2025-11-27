@@ -4,16 +4,43 @@ import { useNavigate } from 'react-router-dom'
  
 
 const SignUp = () => {
-  const [username , setUsername] = useState()
-  const [email , setEmail] = useState()
-  const [password , setPassword] = useState()
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    preferences:{
+    Categories : []
+    }
+    // country : 'us'   // 👈 array of selected categories
+  });
+
   const [Error , setError] = useState()
   const navigate = useNavigate()
+  const categoriesList = ["Business", "Health", "Education", "Culture" , "Technology"];
+  
+  const toggleCategory = (cat) => {
+    setFormData((prev) => {
+      const alreadySelected = prev.preferences.Categories.includes(cat);
+      if (alreadySelected) {
+        return {
+          ...prev,
+          preferences : { Categories: prev.preferences.Categories.filter((c) => c !== cat) },
+        };
+      } else {
+        return {
+          ...prev,
+          preferences : { Categories: [...prev.preferences.Categories, cat] },
+        };
+      }
+    });
+  };
+
+
   const postdata = async (e) => {
 e.preventDefault()
     try{
-      const signInData = {username , email, password}
-      const response = await axios.post('http://localhost:3000/api/register' , signInData);
+      console.log(formData)
+      const response = await axios.post('http://localhost:3000/api/register' , formData);
       localStorage.setItem('token' , response.data.token)
       // the token has no bearer !!!
       console.log("Success")
@@ -24,21 +51,38 @@ e.preventDefault()
       console.log(error)
     }
   }
+
+
+
   return (
     <div>
       <form action="" method="post"  onSubmit={postdata}>
         <div className="">
         <label htmlFor="" className="">Username:</label>
-        <input type="text" className="border border-black" placeholder='username' onChange={(e) => {setUsername(e.target.value)}}/>
+        <input type="text" className="border border-black" placeholder='username' onChange={(e) => setFormData({...formData , username : e.target.value})}/>
         </div>
         <div className="">
         <label htmlFor="" className="">Email:</label>
-        <input type="text" className="border border-black" placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
+        <input type="text" className="border border-black" placeholder='Email' onChange={(e) => setFormData({...formData , email : e.target.value})}/>
         </div>
         <div className="">
         <label htmlFor="" className="">Password:</label>
-        <input type="text" className="border border-black" placeholder='password' onChange={(e) => setPassword(e.target.value)}/>
+        <input type="text" className="border border-black" placeholder='password' onChange={(e) => setFormData({...formData , password : e.target.value})}/>
         </div>
+
+        <h3>Select Categories</h3>
+      <div className="flex flex-col gap-2">
+        {categoriesList.map((cat) => (
+          <label key={cat}>
+            <input
+              type="checkbox"
+              value={cat.toLowerCase()}
+              onChange={() => toggleCategory(cat.toLowerCase())}
+            />
+            {cat}
+          </label>
+        ))}
+      </div>
         <button className="border border-black">Submit</button>
       </form>
     </div>
