@@ -16,7 +16,7 @@ const SignUp = () => {
 
   const [Error , setError] = useState()
   const navigate = useNavigate()
-  const categoriesList = ["Business", "Health", "Education", "Culture" , "Technology"];
+  const categoriesList = ["Business", "Health", "Entertainment","Science","Sports","general", "Culture" , "Technology"];
   
   const toggleCategory = (cat) => {
     setFormData((prev) => {
