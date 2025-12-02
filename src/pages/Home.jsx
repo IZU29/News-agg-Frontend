@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const Home = () => {
   const navigate = useNavigate()
-  const [data, setData] = useState()
+  const [data, setData] = useState({})
 
   useEffect(() => {
   const getData = async () => {
@@ -44,13 +44,13 @@ getData()
     {/* The News Seperated by Category will be present here */}
     <div className="">
       {
-        Object.entries(data.NewsApi).map(([key , value]) => ( 
+        Object.entries(data.NewsApi || {}).map(([key , value]) => ( 
           <div className="flex flex-col" key={key}>
           <h1 className="">{key}:</h1>
           <div className="flex flex-wrap">           
           {
-            value.map((news) => (
-              <div className="w-[150px]">
+            value.map((news , index) => (
+              <div className="w-[150px]" key={index}>
               <img src={news.urlToImage} alt="" className="w-[40px] h[40px]" />
               <h2 className="text-xs text-wrap">{news.title}</h2>
               </div>
