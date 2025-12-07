@@ -5,6 +5,7 @@ import axios from 'axios'
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({})
+  const [search , setSearch] = useState({})
 
   useEffect(() => {
   const getData = async () => {
@@ -26,7 +27,18 @@ catch(error){
 }
 getData()
 } , [])
-  
+  const searchData = async (searchinfo) => {
+    setSearch(searchinfo)
+    const token = localStorage.getItem('token')
+    const res = await axios.get("http://localhost:3000/api/news/search", {
+      headers : {
+      Authorization : `Bearer ${token}`
+    },
+    params: { search : searchinfo}
+  });
+  // console.log(res)
+  // setResults(res.data);
+  }
   return (
     <div>
       <nav className="flex justify-between">
@@ -39,7 +51,7 @@ getData()
    <div className="">
     {/* The Search Bar will be present here */}
     <div className="">
-      <input type="text" className="border m-auto" placeholder='Search'/>
+      <input type="text" className="border m-auto" placeholder='Search' onChange={(e) => searchData(e.target.value)}/>
     </div>
     {/* The News Seperated by Category will be present here */}
     <div className="">
